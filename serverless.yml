@@ -1,0 +1,11 @@
+service: japdb
+provider:
+  name: aws
+  runtime: python3.7
+functions:
+  meaning:
+    handler: src/meaning.get
+    events:
+      - http:
+          path: meaning
+          method: get
