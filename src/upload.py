@@ -1,4 +1,3 @@
-import json
 import boto3
 import json
 s3_client = boto3.client('s3')
@@ -19,7 +18,7 @@ def dictionaryjson(event, context):
     # starting database instance
     url = "mongodb://" + DB_USERNAME + ":" + DB_PASSWORD + "@" + DB_HOST + ":" + DB_PORT + "/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false&ssl=true"
     db_client = MongoClient(url)
-    db = db_client.jabdb
+    db = db_client.japdb
 
     jsonFileReader = json_object['Body'].read()
     jsonDict = json.loads(jsonFileReader)
