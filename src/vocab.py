@@ -13,7 +13,15 @@ def getchaptervocabs(event, context):
     db_client = MongoClient(url)
     db = db_client.japdb
 
-    identifier = event.queryStringParameters.identifier
+    identifier = event["queryStringParameters"]["identifier"]
+    if not identifier:
+        response = {
+            "statusCode": 400,
+            "message": "no identifier found",
+        }
+
+        return response
+        
     bookCol = db["book"]
     wordCol = db["word"]
     bookwordCol = db["bookWord"]
@@ -29,6 +37,8 @@ def getchaptervocabs(event, context):
                 "statusCode": 200,
                 "result": json.dumps(all_words),
             }
+
+            return response
         else:
             response = {
                 "statusCode": 404,
