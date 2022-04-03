@@ -21,7 +21,7 @@ def getchaptervocabs(event, context):
         }
 
         return response
-        
+
     bookCol = db["book"]
     wordCol = db["word"]
     bookwordCol = db["bookWord"]
@@ -33,9 +33,17 @@ def getchaptervocabs(event, context):
             word_list_identifier = selected_bookWord["wordList"]
             all_words = wordCol.find({ "identifier": { "$in": word_list_identifier }})
             print(all_words)
+            word_list = []
+            for word in all_words:
+                word_list.append({
+                    "identifier": word["identifier"],
+                    "meaning": word["meaning"],
+                    "pronounce": word["pronounce"],
+                    "data": word["data"],
+                })
             response = {
                 "statusCode": 200,
-                "result": json.dumps(all_words),
+                "result": json.dumps(word_list),
             }
 
             return response

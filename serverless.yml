@@ -21,6 +21,7 @@ functions:
       - http:
           path: vocabs
           method: get
+          integration: lambda
   uploadhandle:
     handler: src/upload.dictionaryjson
     events:
