@@ -9,18 +9,17 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 def list(event, context):
     url = "mongodb://" + DB_USERNAME + ":" + DB_PASSWORD + "@" + DB_HOST + ":" + DB_PORT + "/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false&ssl=true"
-    client = MongoClient(url)
-
-    db=client.japdb
+    db_client = MongoClient(url)
+    db = db_client.jabdb
 
     bookCol = db["book"]
     allBooks = bookCol.find({})
-    
     output = []
     for book in allBooks:
+        translation = list(book["translation"])
         output.append({
             "identifier": book["identifier"],
-            "tranlation": book["translation"],
+            "translation": book["translation"],
             "chapter": book["chapter"],
         })
 
