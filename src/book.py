@@ -1,6 +1,7 @@
 import json
 import os
 from pymongo import MongoClient
+from bson.json_util import dumps
 
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
@@ -16,20 +17,19 @@ def list(event, context):
     allBooks = bookCol.find({})
     output = []
     for book in allBooks:
-        translation = json.dumps(book["translation"])
         output.append({
             "identifier": book["identifier"],
-            "translation": translation,
+            "translation": book["translation"],
             "chapter": book["chapter"],
         })
 
     body = {
-        "result": json.dumps(output),
+        "result": output,
     }
 
     response = {
         "statusCode": 200,
-        "body": json.dumps(body),
+        "body": dumps(body),
     }
 
     return response

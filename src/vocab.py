@@ -38,21 +38,18 @@ def getchaptervocabs(event, context):
             all_words = wordCol.find({ "identifier": { "$in": word_list_identifier }})
             word_list = []
             for word in all_words:
-                meaning = dumps(word["meaning"])
-                pronounce = dumps(word["pronounce"])
-                data = dumps(word["data"])
                 word_list.append({
                     "identifier": word["identifier"],
-                    "meaning": meaning,
-                    "pronounce":pronounce,
-                    "data": data,
+                    "meaning": word["meaning"],
+                    "pronounce": word["pronounce"],
+                    "data": word["data"],
                 })
             body = {
-                "result": dumps(word_list),
+                "result": word_list
             }
             response = {
                 "statusCode": 200,
-                "body": json.dumps(body)
+                "body": dumps(body)
             }
 
             return response
