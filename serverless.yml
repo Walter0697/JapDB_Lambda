@@ -15,6 +15,12 @@ functions:
       - http:
           path: meaning
           method: get
+  vocab:
+    handler: src/vocab.getchaptervocabs
+    events:
+      - http:
+          path: vocabs
+          method: get
   uploadhandle:
     handler: src/upload.dictionaryjson
     events:
