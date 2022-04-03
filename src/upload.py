@@ -30,7 +30,7 @@ def dictionaryjson(event, context):
     chapterInfo = bookInfo["chapter"]
     wordList = jsonDict["words"]
 
-    print("Updating " + bookInfo["identifier"] + ", Chapter " + chapterInfo["number"] + " from " + bookInfo["translation"] + chapterInfo +  ".v" + version)
+    print("Updating " + bookInfo["identifier"] + ", Chapter " + chapterInfo["number"] + " from " + bookInfo["translation"]["local"] +  ".v" + version)
 
     bookCol = db["book"]
     currentBook = bookCol.find_one({ "identifier": bookInfo["identifier"] })
