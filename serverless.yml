@@ -3,6 +3,12 @@ provider:
   name: aws
   runtime: python3.7
 functions:
+  booklist:
+    handler: src/book.list
+    events:
+      - http:
+          path: booklist
+          method: get
   meaning:
     handler: src/meaning.get
     events:
