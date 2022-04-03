@@ -68,22 +68,25 @@ def dictionaryjson(event, context):
     wordCol = db["word"]
     adding_words = []
     for word in wordList:
+        print("checking " + word["identifier"])
         currentWord = wordCol.find_one({ "identifier": word["identifier"] })
         if currentWord:
+            print("udpating " + word["identifier"])
             meanings = currentWord["meaning"]
+            new_meaning = []
             exist = False
             for meaning in meanings:
                 if meaning["bookid"] == currentBook["_id"]:
-                    meanings.append({
+                    new_meaning.append({
                         "bookid": currentBook["_id"],
                         "meaning": word["meaning"]
                     })
                     exist = True
                 else:
-                    meanings.append(meaning)
+                    new_meaning.append(meaning)
                   
             if not exist:
-                meanings.append({
+                new_meaning.append({
                     "bookid": currentBook["_id"],
                     "meaning": word["meaning"]
                 })
@@ -93,13 +96,14 @@ def dictionaryjson(event, context):
             }, {
                 "$set": {
                     "word": word["word"],
-                    "meaning": meanings,
+                    "meaning": new_meaning,
                     "pronounce": word["pronounce"],
                     "data": word["data"],
                     "language": language,
                 }
             }) 
         else:
+            print("creating " + word["identifier"])
             newWord = {
                 "identifier": word["identifier"],
                 "word": word["word"],
