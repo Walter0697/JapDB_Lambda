@@ -1,6 +1,7 @@
 import json
 import os
 from pymongo import MongoClient
+from bson.json_util import dumps
 
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
@@ -15,9 +16,12 @@ def getchaptervocabs(event, context):
 
     identifier = event["queryStringParameters"]["identifier"]
     if not identifier:
+        body = {
+            "message": "no identifier found"
+        }
         response = {
             "statusCode": 400,
-            "message": "no identifier found",
+            "body": json.dumps(body)
         }
 
         return response
@@ -32,32 +36,43 @@ def getchaptervocabs(event, context):
         if selected_bookWord:
             word_list_identifier = selected_bookWord["wordList"]
             all_words = wordCol.find({ "identifier": { "$in": word_list_identifier }})
-            print(all_words)
             word_list = []
             for word in all_words:
+                meaning = dumps(word["meaning"])
+                pronounce = dumps(word["pronounce"])
+                data = dumps(word["data"])
                 word_list.append({
                     "identifier": word["identifier"],
-                    "meaning": word["meaning"],
-                    "pronounce": word["pronounce"],
-                    "data": word["data"],
+                    "meaning": meaning,
+                    "pronounce":pronounce,
+                    "data": data,
                 })
+            body = {
+                "result": dumps(word_list),
+            }
             response = {
                 "statusCode": 200,
-                "result": json.dumps(word_list),
+                "body": json.dumps(body)
             }
 
             return response
         else:
+            body = {
+                "message": "cannot find the selected word list"
+            }
             response = {
                 "statusCode": 404,
-                "message": "cannot find the selected book"
+                "body": json.dumps(body)
             }
 
             return response
     else:
+        body = {
+            "message": "cannot find the selected book"
+        }
         response = {
             "statusCode": 404,
-            "message": "cannot find the selected book"
+            "body": json.dumps(body)
         }
 
         return response
