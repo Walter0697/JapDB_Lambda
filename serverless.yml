@@ -9,3 +9,12 @@ functions:
       - http:
           path: meaning
           method: get
+  uploadhandle:
+    handler: src/upload.dictionaryjson
+    events:
+      - s3:
+          bucket: dictionary-json-bucket
+          event: s3:ObjectCreated:*
+          rules:
+            - suffix: .json
+          existing: true
