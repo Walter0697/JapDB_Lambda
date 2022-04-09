@@ -28,6 +28,7 @@ def dictionaryjson(event, context):
     bookInfo = jsonDict["book"]
     chapterInfo = bookInfo["chapter"]
     wordList = jsonDict["words"]
+    grammar = jsonDict["grammar"]
 
     print("Updating " + bookInfo["identifier"] + ", Chapter " + chapterInfo["number"] + " from " + bookInfo["translation"]["local"] +  ".v" + version)
 
@@ -47,6 +48,7 @@ def dictionaryjson(event, context):
                 "chapter": chapterInfo,
                 "version": version,
                 "language": language,
+                "grammar": grammar,
             } 
             
         })
@@ -59,6 +61,7 @@ def dictionaryjson(event, context):
             "chapter": chapterInfo,
             "version": version,
             "language": language,
+            "grammar": grammar,
         })
         currentBook = bookCol.find_one({ "identifier": bookInfo["identifier"] })
         print("created book")

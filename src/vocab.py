@@ -7,7 +7,7 @@ DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 DB_USERNAME = os.getenv("DB_USERNAME")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_NAME = os.getenv("DB_NAME")
+CORS_ORIGIN = os.getenv("CORS_ORIGIN")
 
 def getchaptervocabs(event, context):
     url = "mongodb://" + DB_USERNAME + ":" + DB_PASSWORD + "@" + DB_HOST + ":" + DB_PORT + "/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false&ssl=true"
@@ -21,6 +21,11 @@ def getchaptervocabs(event, context):
         }
         response = {
             "statusCode": 400,
+            'headers': {
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Origin': CORS_ORIGIN,
+                'Access-Control-Allow-Methods': 'GET'
+            },
             "body": json.dumps(body)
         }
 
@@ -49,6 +54,11 @@ def getchaptervocabs(event, context):
             }
             response = {
                 "statusCode": 200,
+                'headers': {
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                    'Access-Control-Allow-Origin': CORS_ORIGIN,
+                    'Access-Control-Allow-Methods': 'GET'
+                },
                 "body": dumps(body)
             }
 
@@ -59,6 +69,11 @@ def getchaptervocabs(event, context):
             }
             response = {
                 "statusCode": 404,
+                'headers': {
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                    'Access-Control-Allow-Origin': CORS_ORIGIN,
+                    'Access-Control-Allow-Methods': 'GET'
+                },
                 "body": json.dumps(body)
             }
 
@@ -69,6 +84,11 @@ def getchaptervocabs(event, context):
         }
         response = {
             "statusCode": 404,
+            'headers': {
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Origin': CORS_ORIGIN,
+                'Access-Control-Allow-Methods': 'GET'
+            },
             "body": json.dumps(body)
         }
 
