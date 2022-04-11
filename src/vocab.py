@@ -43,9 +43,15 @@ def getchaptervocabs(event, context):
             all_words = wordCol.find({ "identifier": { "$in": word_list_identifier }})
             word_list = []
             for word in all_words:
+                meaning = ""
+                for m in word["meaning"]:
+                    if m["bookid"] == selected_book["_id"]:
+                        meaning = m["meaning"]
+                        break
+
                 word_list.append({
                     "identifier": word["identifier"],
-                    "meaning": word["meaning"],
+                    "meaning": meaning,
                     "pronounce": word["pronounce"],
                     "data": word["data"],
                 })
