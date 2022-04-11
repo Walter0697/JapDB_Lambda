@@ -23,6 +23,7 @@ def list(event, context):
             "identifier": book["identifier"],
             "translation": book["translation"],
             "chapter": book["chapter"],
+            "grammar": book["grammar"],
         })
 
     body = {
