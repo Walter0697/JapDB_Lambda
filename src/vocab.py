@@ -50,6 +50,7 @@ def getchaptervocabs(event, context):
                         break
 
                 word_list.append({
+                    "word": word["word"],
                     "identifier": word["identifier"],
                     "meaning": meaning,
                     "pronounce": word["pronounce"],
