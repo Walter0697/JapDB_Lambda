@@ -81,7 +81,8 @@ def dictionaryjson(event, context):
                 if meaning["bookid"] == currentBook["_id"]:
                     new_meaning.append({
                         "bookid": currentBook["_id"],
-                        "meaning": word["meaning"]
+                        "meaning": word["meaning"],
+                        "source": word["source"],
                     })
                     exist = True
                 else:
@@ -105,14 +106,14 @@ def dictionaryjson(event, context):
                 }
             }) 
         else:
-            print("creating " + word["identifier"])
             newWord = {
                 "identifier": word["identifier"],
                 "word": word["word"],
                 "meaning": [
                     {
                         "bookid": currentBook["_id"],
-                        "meaning": word["meaning"]
+                        "meaning": word["meaning"],
+                        "source": word["source"],
                     }    
                 ],
                 "pronounce": word["pronounce"],
