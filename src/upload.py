@@ -3,6 +3,7 @@ import json
 s3_client = boto3.client('s3')
 import os
 from pymongo import MongoClient
+from bson.json_util import dumps
 
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
@@ -73,7 +74,7 @@ def dictionaryjson(event, context):
         print("checking " + word["identifier"])
         currentWord = wordCol.find_one({ "identifier": word["identifier"] })
         if currentWord:
-            print("udpating " + word["identifier"])
+            print("updating " + word["identifier"])
             meanings = currentWord["meaning"]
             new_meaning = []
             exist = False
@@ -101,7 +102,7 @@ def dictionaryjson(event, context):
                     "word": word["word"],
                     "meaning": new_meaning,
                     "pronounce": word["pronounce"],
-                    "data": word["data"],
+                    "data": dumps(word["data"]),
                     "language": language,
                 }
             }) 
@@ -117,7 +118,7 @@ def dictionaryjson(event, context):
                     }    
                 ],
                 "pronounce": word["pronounce"],
-                "data": word["data"],
+                "data": dumps(word["data"]),
                 "language": language,
             }
             wordCol.insert_one(newWord)
