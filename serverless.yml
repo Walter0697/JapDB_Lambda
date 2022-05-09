@@ -34,3 +34,5 @@ functions:
           rules:
             - suffix: .json
           existing: true
+  reset:
+    handler: src/reset.reset
