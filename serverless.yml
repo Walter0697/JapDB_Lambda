@@ -15,6 +15,10 @@ functions:
       - http:
           path: meaning
           method: get
+          request:
+            parameters:
+              querystrings:
+                identifier: true
   vocab:
     handler: src/vocab.getchaptervocabs
     events:
