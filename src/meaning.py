@@ -55,7 +55,7 @@ def get(event, context):
             'Access-Control-Allow-Origin': CORS_ORIGIN,
             'Access-Control-Allow-Methods': 'GET'
         },
-        "body": dumps(wordCol),
+        "body": dumps(selected_word),
     }
 
     return response
