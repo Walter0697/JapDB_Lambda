@@ -31,6 +31,8 @@ def get(event, context):
         return response
 
     wordCol = db["word"]
+    bookCol = db["book"]
+
     selected_word = wordCol.find_one({ "identifier": identifier })
     if not selected_word:
         body = {
@@ -48,6 +50,17 @@ def get(event, context):
 
         return response
 
+    book_id_list = []
+    for meaning in selected_word.meaning:
+        book_id_list.append(meaning.bookid)
+    
+    book_list = bookCol.find({ "_id": {"$in": book_id_list }})
+
+    output = {
+        "word": selected_word,
+        "books": book_list
+    }
+
     response = {
         "statusCode": 200,
         'headers': {
@@ -55,7 +68,7 @@ def get(event, context):
             'Access-Control-Allow-Origin': CORS_ORIGIN,
             'Access-Control-Allow-Methods': 'GET'
         },
-        "body": dumps(selected_word),
+        "body": dumps(output),
     }
 
     return response
