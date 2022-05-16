@@ -52,7 +52,7 @@ def get(event, context):
 
     book_id_list = []
     for meaning in selected_word["meaning"]:
-        book_id_list.append(meaning.bookid)
+        book_id_list.append(meaning["bookid"])
     
     book_list = bookCol.find({ "_id": {"$in": book_id_list }})
 
