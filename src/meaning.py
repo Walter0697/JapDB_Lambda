@@ -51,7 +51,7 @@ def get(event, context):
         return response
 
     book_id_list = []
-    for meaning in selected_word.meaning:
+    for meaning in selected_word["meaning"]:
         book_id_list.append(meaning.bookid)
     
     book_list = bookCol.find({ "_id": {"$in": book_id_list }})
