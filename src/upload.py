@@ -86,6 +86,10 @@ def dictionaryjson(event, context):
                         "bookid": currentBook["_id"],
                         "meaning": word["meaning"],
                         "source": word["source"],
+                        "data": word["data"],
+                        "word": word["word"],
+                        "pronounce": word["pronounce"],
+                        "language": language,
                     })
                     exist = True
                 else:
@@ -94,34 +98,35 @@ def dictionaryjson(event, context):
             if not exist:
                 new_meaning.append({
                     "bookid": currentBook["_id"],
-                    "meaning": word["meaning"]
+                    "meaning": word["meaning"],
+                    "source": word["source"],
+                    "data": word["data"],
+                    "word": word["word"],
+                    "pronounce": word["pronounce"],
+                    "language": language,
                 })
               
             wordCol.update_one({
                 "identifier": word["identifier"]
             }, {
                 "$set": {
-                    "word": word["word"],
                     "meaning": new_meaning,
-                    "pronounce": word["pronounce"],
-                    "data": word["data"],
-                    "language": language,
                 }
             }) 
         else:
             newWord = {
                 "identifier": word["identifier"],
-                "word": word["word"],
                 "meaning": [
                     {
                         "bookid": currentBook["_id"],
                         "meaning": word["meaning"],
                         "source": word["source"],
+                        "pronounce": word["pronounce"],
+                        "data": word["data"],
+                        "language": language,
+                        "word": word["word"],
                     }    
                 ],
-                "pronounce": word["pronounce"],
-                "data": word["data"],
-                "language": language,
             }
             wordCol.insert_one(newWord)
             
