@@ -43,6 +43,7 @@ def getchaptervocabs(event, context):
             all_words = wordCol.find({ "identifier": { "$in": word_list_identifier }})
             word_list = []
             for word in all_words:
+                print(word)
                 meaning = ""
                 word = ""
                 data = None
