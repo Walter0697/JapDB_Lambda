@@ -44,17 +44,23 @@ def getchaptervocabs(event, context):
             word_list = []
             for word in all_words:
                 meaning = ""
+                word = ""
+                data = None
+                pronounce = None
                 for m in word["meaning"]:
                     if m["bookid"] == selected_book["_id"]:
                         meaning = m["meaning"]
+                        word = m["word"]
+                        data = m["data"]
+                        pronounce = m["pronounce"]
                         break
 
                 word_list.append({
-                    "word": word["word"],
+                    "word": word,
                     "identifier": word["identifier"],
                     "meaning": meaning,
-                    "pronounce": word["pronounce"],
-                    "data": word["data"],
+                    "pronounce": pronounce,
+                    "data": data,
                 })
             body = {
                 "result": word_list
